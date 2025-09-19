@@ -1,0 +1,6 @@
+@Sage100_API_HostAddress = http://localhost:5268
+
+GET {{Sage100_API_HostAddress}}/sage/
+Accept: application/json
+
+###

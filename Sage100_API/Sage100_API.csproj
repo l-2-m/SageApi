@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x86</Platforms>
+    <UserSecretsId>2d3640fe-348b-4cc6-b96c-a8bccdb73164</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.20" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sage_Wrapper\Sage_Wrapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.Objets100cLib">
+      <HintPath>..\Sage_Wrapper\obj\Debug\Interop.Objets100cLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
