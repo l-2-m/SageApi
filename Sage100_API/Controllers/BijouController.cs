@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Objets100cLib;
+using Sage100_API.Models;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,26 +13,26 @@ namespace Sage100_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BijouController : ControllerBase
     {
+        private readonly SageOptions _sageoptions;
+        private readonly string _dbName = "BIJOU";
         private Objets100cLib.BSCPTAApplication100c cpta;
-        public BijouController()
+
+        public BijouController(IOptions<SageOptions> options)
         {
+            _sageoptions = options.Value;
+
             cpta = new Objets100cLib.BSCPTAApplication100c();
-            cpta.CompanyServer = @"SRV-CTA-ABBAYE\SAGE100";
-            cpta.CompanyDatabaseName = "BIJOU";
+            cpta.CompanyServer = _sageoptions.Server;
             
+            cpta.Loggable.UserName = _sageoptions.SageUser;
+            cpta.Loggable.UserPwd = _sageoptions.SagePassword;
+
+            cpta.CompanyDatabaseName = _dbName;
         }
 
-        //public SageController(string server, string db, string user, string pw)
-        //{
-        //    cpta = new Objets100cLib.BSCPTAApplication100c();
-        //    cpta.Loggable.UserPwd= pw;
-        //    cpta.Loggable.UserName= user;
-        //    cpta.CompanyServer = server;
-        //    cpta.CompanyDatabaseName = db;
-
-        //}
         // GET: api/<ValuesController>
         [Authorize]
         [HttpGet]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Sage100_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,11 +13,11 @@ namespace Sage100_API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ApiOptions _options;
+        private readonly ApiOptions _apioptions;
 
         public AuthController(IOptions<ApiOptions> options)
         {
-            _options = options.Value;
+            _apioptions = options.Value;
         }
 
         [HttpPost("login")]
@@ -26,9 +27,9 @@ namespace Sage100_API.Controllers
             {
                 return BadRequest("Invalid client request");
             }
-            if (apiKey == _options.APIKey)
+            if (apiKey == _apioptions.APIKey)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Secret));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_apioptions.Secret));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
                     issuer: "https://localhost:5001",
